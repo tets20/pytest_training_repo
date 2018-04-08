@@ -1,1 +1,1 @@
-# pytest_training_repo
+# Репозиторий для тестов
