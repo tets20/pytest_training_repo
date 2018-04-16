@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from application import Application
-from kontact import Kontact
+from fixture.application import Application
+from model.kontact import Kontact
 import pytest
 
 
