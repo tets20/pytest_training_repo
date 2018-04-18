@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-from fixture.application import Application
+
 from model.kontact import Kontact
-import pytest
 
-
-@pytest.fixture
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
 
 def test_add_contact(app):
     app.session.login( username="admin", password="secret")
@@ -18,7 +11,6 @@ def test_add_contact(app):
                                email="1test@test.ru", email2="2test@test.ru", email3="3test@test.ru",
                                homepage="test.test.ru", byear="1901", ayear="1991", address2="Test_city",
                                home2="Test_home", notes="Test_contact"))
-
     app.session.logout()
 
 
