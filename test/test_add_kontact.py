@@ -2,7 +2,6 @@
 
 from model.kontact import Kontact
 
-
 def test_add_contact(app):
     app.session.login( username="admin", password="secret")
     app.kontact.create(Kontact(firstname="Test_contact", middlename="Test_contact", lastname="Test_contact",
@@ -20,4 +19,5 @@ def test_add_empty_contact(app):
                                address="", home="", mobile="", work="", fax="", email="", email2="", email3="",
                                homepage="", byear="", ayear="", address2="", home2="", notes=""))
     app.session.logout()
+
 
