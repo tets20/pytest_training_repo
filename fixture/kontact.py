@@ -9,82 +9,60 @@ class KontactHelper:
     def create(self, kontact):
         wd = self.app.wd
         self.open_add_new_page()
+        self.fill_kontact_form(kontact)
+        # submit group creation
+        wd.find_element_by_name("submit").click()
+
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+
+
+    def fill_kontact_form(self, kontact):
+        wd = self.app.wd
         # fill group form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(kontact.firstname)
-        wd.find_element_by_name("middlename").click()
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(kontact.middlename)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(kontact.lastname)
-        wd.find_element_by_name("nickname").click()
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(kontact.nickname)
-        wd.find_element_by_name("title").click()
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(kontact.title)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(kontact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(kontact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(kontact.home)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(kontact.mobile)
-        wd.find_element_by_name("work").click()
-        wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(kontact.work)
-        wd.find_element_by_name("fax").click()
-        wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys(kontact.fax)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(kontact.email)
-        wd.find_element_by_name("email2").click()
-        wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys(kontact.email2)
-        wd.find_element_by_name("email3").click()
-        wd.find_element_by_name("email3").clear()
-        wd.find_element_by_name("email3").send_keys(kontact.email3)
-        wd.find_element_by_name("homepage").click()
-        wd.find_element_by_name("homepage").clear()
-        wd.find_element_by_name("homepage").send_keys(kontact.homepage)
+        self.change_field_value("firstname",kontact.firstname)
+        self.change_field_value("middlename", kontact.middlename)
+        self.change_field_value("lastname", kontact.lastname)
+        self.change_field_value("nickname",kontact.nickname)
+        self.change_field_value("title", kontact.title)
+        self.change_field_value("company", kontact.company)
+        self.change_field_value("address", kontact.address)
+        self.change_field_value("home", kontact.home)
+        self.change_field_value("mobile", kontact.mobile)
+        self.change_field_value("work", kontact.work)
+        self.change_field_value("fax", kontact.fax)
+        self.change_field_value("email", kontact.email)
+        self.change_field_value("email2", kontact.email2)
+        self.change_field_value("email3", kontact.email3)
+        self.change_field_value("homepage", kontact.homepage)
+
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(kontact.byear)
+        if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[3]").is_selected():
+            wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[3]").click()
+
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").click()
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[2]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[2]").click()
-        wd.find_element_by_name("ayear").click()
-        wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys(kontact.ayear)
-        wd.find_element_by_name("address2").click()
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(kontact.address2)
-        wd.find_element_by_name("phone2").click()
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys(kontact.home2)
-        wd.find_element_by_name("notes").click()
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys(kontact.notes)
-        # submit group creation
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        if not wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[3]").is_selected():
+            wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[3]").click()
+
+        self.change_field_value("byear",kontact.byear)
+        self.change_field_value("ayear", kontact.ayear)
+        self.change_field_value("address2", kontact.address2)
+        self.change_field_value("phone2", kontact.phone2)
+        self.change_field_value("notes", kontact.notes)
 
 
     def open_add_new_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+
 
     def go_to_home_page(self):
         wd = self.app.wd
@@ -102,81 +80,14 @@ class KontactHelper:
         wd.switch_to_alert().accept()
 
 
-    def edit_first_kontact(self,kontact):
+    def modify_first_kontact(self, new_kontact_data):
         wd = self.app.wd
         self.go_to_home_page()
         #select a contact for editing
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         #editting
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(kontact.firstname)
-        wd.find_element_by_name("middlename").click()
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(kontact.middlename)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(kontact.lastname)
-        wd.find_element_by_name("nickname").click()
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(kontact.nickname)
-        wd.find_element_by_name("title").click()
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(kontact.title)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(kontact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(kontact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(kontact.home)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(kontact.mobile)
-        wd.find_element_by_name("work").click()
-        wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(kontact.work)
-        wd.find_element_by_name("fax").click()
-        wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys(kontact.fax)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(kontact.email)
-        wd.find_element_by_name("email2").click()
-        wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys(kontact.email2)
-        wd.find_element_by_name("email3").click()
-        wd.find_element_by_name("email3").clear()
-        wd.find_element_by_name("email3").send_keys(kontact.email3)
-        wd.find_element_by_name("homepage").click()
-        wd.find_element_by_name("homepage").clear()
-        wd.find_element_by_name("homepage").send_keys(kontact.homepage)
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys(kontact.byear)
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").click()
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[2]").is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[2]").click()
-        wd.find_element_by_name("ayear").click()
-        wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys(kontact.ayear)
-        wd.find_element_by_name("address2").click()
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(kontact.address2)
-        wd.find_element_by_name("phone2").click()
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys(kontact.home2)
-        wd.find_element_by_name("notes").click()
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys(kontact.notes)
+        self.fill_kontact_form(new_kontact_data)
         #update
         wd.find_element_by_name("update").click()
-        self.go_to_home_page()
+        #self.go_to_home_page()
 
