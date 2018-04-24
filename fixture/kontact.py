@@ -89,7 +89,9 @@ class KontactHelper:
         self.fill_kontact_form(new_kontact_data)
         #update
         wd.find_element_by_name("update").click()
-        #self.go_to_home_page()
+        if not (wd.current_url.endswith("/index.php") and
+                len(wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")) > 0):
+            self.go_to_home_page()
 
     def count(self):
         wd = self.app.wd
