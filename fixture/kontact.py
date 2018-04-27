@@ -90,7 +90,7 @@ class KontactHelper:
         #update
         wd.find_element_by_name("update").click()
         if not (wd.current_url.endswith("/index.php") and
-                len(wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")) > 0):
+                len(wd.find_element_by_id("MassCB")) > 0):
             self.go_to_home_page()
 
     def count(self):
