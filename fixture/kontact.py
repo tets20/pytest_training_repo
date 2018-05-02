@@ -71,23 +71,35 @@ class KontactHelper:
         wd.find_element_by_link_text("home").click()
 
 
-    def delete_first_kontact(self):
+    def delete_kontact_by_index(self,index):
         wd = self.app.wd
         self.go_to_home_page()
         #select first kontact
-        wd.find_element_by_name("selected[]").click()
+        self.select_group_by_index(index)
         # push button Delete
         wd.execute_script("DeleteSel()")
         #accept delete
         wd.switch_to_alert().accept()
         self.kontact_cache = None
 
+    def delete_first_kontact(self):
+        self.delete_kontact_by_index(0)
 
-    def modify_first_kontact(self, new_kontact_data):
+
+    def select_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def select_group_by_index(self,index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+
+    def modify_kontact_by_index(self, new_kontact_data,index):
         wd = self.app.wd
         self.go_to_home_page()
         #select a contact for editing
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.select_kontact_by_index(index)
         #editting
         self.fill_kontact_form(new_kontact_data)
         #update
@@ -96,6 +108,24 @@ class KontactHelper:
                 len(wd.find_element_by_id("MassCB")) > 0):
             self.go_to_home_page()
         self.kontact_cache = None
+
+
+    def modify_first_kontact(self):
+        self.modify_kontact_by_index(0)
+
+
+    def select_first_kontact(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+
+    def select_kontact_by_index(self,index):
+        wd = self.app.wd
+        if index in range(0,2):
+            wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index + 2]) + "/td[8]/a/img").click()
+        else:
+            wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index])+ "/td[8]/a/img").click()
+
+
 
     def count(self):
         wd = self.app.wd
