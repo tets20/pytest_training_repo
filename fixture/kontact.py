@@ -1,4 +1,4 @@
-
+from model.kontact import Kontact
 
 class KontactHelper:
 
@@ -12,6 +12,7 @@ class KontactHelper:
         self.fill_kontact_form(kontact)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        self.go_to_home_page()
 
 
     def change_field_value(self, field_name, text):
@@ -97,4 +98,21 @@ class KontactHelper:
         wd = self.app.wd
         self.go_to_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+
+
+    def get_kontact_list(self):
+        wd = self.app.wd
+        self.go_to_home_page()
+        kontacts = []
+        for element in wd.find_elements_by_name("entry"):
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            #print(id)
+            element.find_element_by_name("selected[]").get_attribute("title")
+            #print(title)
+            td = element.find_elements_by_tag_name("td")
+            #print("%s" % td[0])
+            kontacts.append(Kontact(id =id,firstname= td[0],lastname=td[1]))
+            #print("%s" %kontacts[0])
+        return kontacts
 
