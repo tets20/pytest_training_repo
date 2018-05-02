@@ -13,6 +13,7 @@ class KontactHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.go_to_home_page()
+        self.kontact_cache = None
 
 
     def change_field_value(self, field_name, text):
@@ -79,6 +80,7 @@ class KontactHelper:
         wd.execute_script("DeleteSel()")
         #accept delete
         wd.switch_to_alert().accept()
+        self.kontact_cache = None
 
 
     def modify_first_kontact(self, new_kontact_data):
@@ -93,6 +95,7 @@ class KontactHelper:
         if not (wd.current_url.endswith("/index.php") and
                 len(wd.find_element_by_id("MassCB")) > 0):
             self.go_to_home_page()
+        self.kontact_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -100,19 +103,18 @@ class KontactHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
 
+    kontact_cache = None
+
 
     def get_kontact_list(self):
-        wd = self.app.wd
-        self.go_to_home_page()
-        kontacts = []
-        for element in wd.find_elements_by_name("entry"):
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            #print(id)
-            element.find_element_by_name("selected[]").get_attribute("title")
-            #print(title)
-            td = element.find_elements_by_tag_name("td")
-            #print("%s" % td[0])
-            kontacts.append(Kontact(id =id,firstname= td[0],lastname=td[1]))
-            #print("%s" %kontacts[0])
-        return kontacts
+        if self.kontact_cache is None:
+            wd = self.app.wd
+            self.go_to_home_page()
+            self.kontact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                element.find_element_by_name("selected[]").get_attribute("title")
+                td = element.find_elements_by_tag_name("td")
+                self.kontact_cache.append(Kontact(id =id,firstname= td[0],lastname=td[1]))
+        return list(self.kontact_cache)
 

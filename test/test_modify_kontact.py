@@ -9,8 +9,8 @@ def test_modify_kontact_firstname(app):
     kontact = Kontact(firstname="Test_contact!!!")
     kontact.id = old_kontacts[0].id
     app.kontact.modify_first_kontact(kontact)
+    assert len(old_kontacts) == app.kontact.count()
     new_kontacts = app.kontact.get_kontact_list()
-    assert len(old_kontacts) == len(new_kontacts)
     old_kontacts[0] = kontact
     assert sorted(old_kontacts, key=Kontact.id_or_max) == sorted(new_kontacts, key=Kontact.id_or_max)
 
@@ -22,7 +22,7 @@ def test_modify_kontact_middlename(app):
     kontact = Kontact(middlename="Test_contact!!!")
     kontact.id = old_kontacts[0].id
     app.kontact.modify_first_kontact(kontact)
+    assert len(old_kontacts) == app.kontact.count()
     new_kontacts = app.kontact.get_kontact_list()
-    assert len(old_kontacts) == len(new_kontacts)
     old_kontacts[0] = kontact
     assert sorted(old_kontacts, key=Kontact.id_or_max) == sorted(new_kontacts, key=Kontact.id_or_max)
