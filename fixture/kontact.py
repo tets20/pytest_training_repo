@@ -110,8 +110,8 @@ class KontactHelper:
         self.kontact_cache = None
 
 
-    def modify_first_kontact(self):
-        self.modify_kontact_by_index(0)
+    def modify_first_kontact(self,new_kontact_data):
+        self.modify_kontact_by_index(new_kontact_data,0)
 
 
     def select_first_kontact(self):
@@ -120,10 +120,7 @@ class KontactHelper:
 
     def select_kontact_by_index(self,index):
         wd = self.app.wd
-        if index in range(0,2):
-            wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index + 2]) + "/td[8]/a/img").click()
-        else:
-            wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index])+ "/td[8]/a/img").click()
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index + 2])+ "/td[8]/a/img").click()
 
 
 

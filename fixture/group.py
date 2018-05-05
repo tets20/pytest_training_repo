@@ -68,8 +68,8 @@ class GroupHelper:
         self.group_cache = None
 
 
-    def modify_first_group(self):
-        self.modify_group_by_index(0)
+    def modify_first_group(self,new_group_data):
+        self.modify_group_by_index(0,new_group_data)
 
 
     def select_first_group(self):
