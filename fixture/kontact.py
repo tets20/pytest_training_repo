@@ -140,8 +140,9 @@ class KontactHelper:
             self.kontact_cache = []
             for element in wd.find_elements_by_name("entry"):
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                element.find_element_by_name("selected[]").get_attribute("title")
-                td = element.find_elements_by_tag_name("td")
-                self.kontact_cache.append(Kontact(id =id,firstname= td[0],lastname=td[1]))
+                list_td = element.find_elements_by_tag_name("td")
+                firstname = list_td[1].text
+                lastname = list_td[2].text
+                self.kontact_cache.append(Kontact(id =id,firstname=firstname,lastname=lastname))
         return list(self.kontact_cache)
 
