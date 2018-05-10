@@ -1,15 +1,34 @@
 # -*- coding: utf-8 -*-
 
 from model.kontact import Kontact
+import random
+import string
+import pytest
 
-def test_add_kontact(app):
+
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + string.digits + string.punctuation +" "*10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+
+Testdata =[Kontact(firstname="", middlename="", lastname="", nickname="", title="", company="",
+                               address="", home="", mobile="", work="", fax="", email="", email2="", email3="",
+                               homepage="", byear="", ayear="", address2="", phone2="", notes="")] + [
+    Kontact(firstname=random_string("firstname",4), middlename=random_string("middlename",4),
+            lastname=random_string("lastname",4),
+            nickname=random_string("nickname", 5),title=random_string("title",5),company=random_string("company",5),
+            address=random_string("address",3),home=random_string("home",3),mobile=random_string("mobile",3),
+            work=random_string("work",2),fax=random_string("fax",5), email=random_string("email",5),
+            email2=random_string("email2",3),
+            email3=random_string("email3",4), homepage=random_string("homepage",5),byear=random_string("byear",6),
+            ayear=random_string("ayear",3), address2=random_string("address2",5), phone2=random_string("phone2",5),
+            notes=random_string("notes",20))
+    for i in range(5)
+]
+
+@pytest.mark.parametrize("kontact",Testdata, ids = [repr(x) for x in Testdata])
+def test_add_kontact(app,kontact):
     old_kontacts = app.kontact.get_kontact_list()
-    kontact = Kontact(firstname="Test_contact", middlename="Test_contact", lastname="Test_contact",
-                               nickname="TC", title="Test_user", company="Test_company", address="Test_country",
-                               home="Home_test", mobile="334 1", work="123-", fax="3()",
-                               email="1test@test.ru", email2="2test@test.ru", email3="3test@test.ru",
-                               homepage="test.test.ru", byear="1901", ayear="1991", address2="Test_city",
-                               phone2="Test_home", notes="Test_contact")
     app.kontact.create(kontact)
     assert len(old_kontacts) + 1 == app.kontact.count()
     new_kontacts = app.kontact.get_kontact_list()
@@ -17,17 +36,5 @@ def test_add_kontact(app):
     assert sorted(old_kontacts, key = Kontact.id_or_max) == sorted(new_kontacts, key = Kontact.id_or_max)
 
 
-
-
-'''def test_add_empty_kontact(app):
-    old_kontacts = app.kontact.get_kontact_list()
-    kontact = Kontact(firstname="", middlename="", lastname="", nickname="", title="", company="",
-                               address="", home="", mobile="", work="", fax="", email="", email2="", email3="",
-                               homepage="", byear="", ayear="", address2="", phone2="", notes="")
-    app.kontact.create(kontact)
-    assert len(old_kontacts) + 1 == app.kontact.count()
-    new_kontacts = app.kontact.get_kontact_list()
-    old_kontacts.append(kontact)
-    assert sorted(old_kontacts, key = Kontact.id_or_max) == sorted(new_kontacts, key = Kontact.id_or_max)'''
 
 
