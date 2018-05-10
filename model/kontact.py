@@ -5,7 +5,7 @@ class Kontact:
     def __init__(self, firstname = None, middlename= None, lastname= None, nickname= None, title= None, company= None,
                  address= None, home= None, mobile= None, work= None, fax= None, email= None, email2= None,
                  email3= None, homepage= None, byear= None, ayear= None, address2= None, phone2= None, notes= None,
-                 id = None ):
+                 id = None, all_phones_from_homepage=None, all_email_from_homepage=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -26,10 +26,12 @@ class Kontact:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
-        self.id =id
+        self.id = id
+        self.all_phones_from_homepage = all_phones_from_homepage
+        self.all_email_from_homepage = all_email_from_homepage
 
     def __repr__(self):
-        return "%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.middlename)
+        return "%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.middlename,self.all_phones_from_homepage)
 
 
     def __eq__(self, other):
