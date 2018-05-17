@@ -5,7 +5,7 @@ import os.path
 import random
 import string
 import getopt #для чтения опций командной строки
-import json
+import jsonpickle
 import sys # чтобы получить доступ к этим опциям
 
 
@@ -39,5 +39,5 @@ Testdata =[Group(name="", header="", footer="")] + [
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
 with open(file, "w") as out:
-    out.write(json.dumps(Testdata, default=lambda x:x.__dict__, indent=2)) #dumps - превращает структуру данных,
-    #  __dict__- в строку и превращаем в слооварь
+    jsonpickle.set_encoder_options("json", indent=2)
+    out.write(jsonpickle.encode(Testdata))
