@@ -83,6 +83,19 @@ class KontactHelper:
         wd.switch_to_alert().accept()
         self.kontact_cache = None
 
+
+    def delete_kontact_by_id(self, id):
+        wd = self.app.wd
+        self.go_to_home_page()
+        # select first kontact
+        self.select_group_by_id(id)
+        # push button Delete
+        wd.execute_script("DeleteSel()")
+        # accept delete
+        wd.switch_to_alert().accept()
+        self.kontact_cache = None
+
+
     def delete_first_kontact(self):
         self.delete_kontact_by_index(0)
 
@@ -95,12 +108,31 @@ class KontactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_group_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_id(str(id)).click()# Поменял здесь!!
+
 
     def modify_kontact_by_index(self, new_kontact_data,index):
         wd = self.app.wd
         self.go_to_home_page()
         #select a contact for editing
         self.select_kontact_by_index(index)
+        #editting
+        self.fill_kontact_form(new_kontact_data)
+        #update
+        wd.find_element_by_name("update").click()
+        if not (wd.current_url.endswith("/index.php") and
+                len(wd.find_element_by_id("MassCB")) > 0):
+            self.go_to_home_page()
+        self.kontact_cache = None
+
+
+    def modify_kontact_by_id(self, id, new_kontact_data):
+        wd = self.app.wd
+        self.go_to_home_page()
+        #select a contact for editing
+        self.select_kontact_by_id(id)
         #editting
         self.fill_kontact_form(new_kontact_data)
         #update
@@ -122,6 +154,10 @@ class KontactHelper:
     def select_kontact_by_index(self,index):
         wd = self.app.wd
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr" + str([index + 2])+ "/td[8]/a/img").click()
+
+    def select_kontact_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
 
 
 
