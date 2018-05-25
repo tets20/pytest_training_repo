@@ -3,7 +3,7 @@
 from model.kontact import Kontact
 import random
 
-def test_modify_kontact_firstname(app,db):
+def test_modify_kontact_firstname(app,db,check_ui):
     if len(db.get_kontact_list()) == 0:
         app.kontact.create(Kontact(firstname="test"))
     old_kontacts = db.get_kontact_list()
@@ -13,9 +13,11 @@ def test_modify_kontact_firstname(app,db):
     assert len(old_kontacts) == app.kontact.count()
     new_kontacts = db.get_kontact_list()
     assert sorted(old_kontacts, key=Kontact.id_or_max) == sorted(new_kontacts, key=Kontact.id_or_max)
+    if check_ui:
+        assert sorted(new_kontacts, key=Kontact.id_or_max) == sorted(app.kontact.get_kontact_list(),key=Kontact.id_or_max)
 
 
-def test_modify_kontact_middlename(app,db):
+def test_modify_kontact_middlename(app,db,check_ui):
     if len(db.get_kontact_list()) == 0:
         app.kontact.create(Kontact(firstname="test"))
     old_kontacts = db.get_kontact_list()
@@ -25,3 +27,5 @@ def test_modify_kontact_middlename(app,db):
     assert len(old_kontacts) == app.kontact.count()
     new_kontacts = db.get_kontact_list()
     assert sorted(old_kontacts, key=Kontact.id_or_max) == sorted(new_kontacts, key=Kontact.id_or_max)
+    if check_ui:
+        assert sorted(new_kontacts, key=Kontact.id_or_max) == sorted(app.kontact.get_kontact_list(),key=Kontact.id_or_max)
