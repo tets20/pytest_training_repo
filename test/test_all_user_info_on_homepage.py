@@ -24,26 +24,12 @@ def test_check_info_on_home_page_and_in_db(app,db):
     list_kontakts_on_homepage = app.kontact.get_kontact_list()
     list_kontakts_from_bd = db.get_kontact_list()
 
-    #print("GUI!" + str(sorted(list_kontakts_on_homepage,key=Kontact.id_or_max)))
-    #print("DB!" + str(sorted(list_kontakts_from_bd,key=Kontact.id_or_max)))
-
     for kontact in range(len(sorted(list_kontakts_on_homepage,key=Kontact.id_or_max))):
         kontact_home_page = sorted(list_kontakts_on_homepage,key=Kontact.id_or_max)[kontact]
         kontact_from_bd = sorted(list_kontakts_from_bd,key=Kontact.id_or_max)[kontact]
 
-        #Проверяем каждый мейл контакта
-        split_list1 = split(kontact_home_page.all_email_from_homepage)
-        for elem in range(len(split_list1)):
-            print(split_list1[elem])
-            assert split_list1[elem] == kontact_from_bd.all_email_from_homepage[elem]
-
-        #Проверям каждый телефон контакта
-        split_list2 = split(kontact_home_page.all_phones_from_homepage)
-        for elem in range(len(split_list2)):
-            print(split_list2[elem])
-            assert split_list2[elem] == kontact_from_bd.all_phones_from_homepage[elem]
-
-
+        assert kontact_home_page.all_email_from_homepage == merge_email_like_on_home_page(kontact_from_bd)
+        assert kontact_home_page.all_phones_from_homepage == merge_phones_like_on_home_page(kontact_from_bd)
         assert kontact_home_page.id == kontact_from_bd.id
         assert kontact_home_page.firstname == kontact_from_bd.firstname
         assert kontact_home_page.lastname == kontact_from_bd.lastname
@@ -65,8 +51,4 @@ def merge_phones_like_on_home_page(kontact):
 def merge_email_like_on_home_page(kontact):
     return "\n".join(filter(lambda x: x != "",filter(lambda x: x is not None,
                                                      [kontact.email, kontact.email2, kontact.email3])))
-
-def split(s):
-    #print(s.split('\n'))
-    return s.split('\n')
 
