@@ -13,6 +13,7 @@ class DbFixture:
         self.connection.autocommit(True) # отрубаем кэш
 
 
+
     def get_group_list(self):
         list = []
         cursor = self.connection.cursor()
